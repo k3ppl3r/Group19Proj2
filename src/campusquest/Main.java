@@ -79,6 +79,7 @@ public class Main {
 		questBoard.printAssignmentsFor(John1);
 		System.out.println("\n");
 		questBoard.printAssignmentsFor(John2);
+		System.out.println("\n");
 		System.out.println("Total points: " + RewardUtil.sumPoints(studentList) + "\n");
 		
 	} //end function
