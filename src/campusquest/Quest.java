@@ -3,20 +3,15 @@
 
 package campusquest;
 
-//behavior contract for all quest types
+//every quest type has to implement these
 public interface Quest {
 
     int getId();
-
     String getTitle();
-
     int getBasePoints();
 
-    //returns true once the quest has been marked done
     boolean isCompleted();
 
-    //update completion state
-    //credit student
-    //return
+    //mark done, give the student their points, return how many they got
     int completeFor(Student s);
 }

@@ -25,19 +25,17 @@ public abstract class AbstractQuest implements Quest {
         this.completed = false;
     }
 
-    //call this once the quest is finished — can't go back
+    //call this once the quest is finished; can't go back
     protected void markCompleted() {
         if (completed)
             throw new IllegalStateException("Quest " + id + " already completed");
         completed = true;
     }
 
+    //getters
     @Override public int getId() { return id; }
-
     @Override public String getTitle() { return title; }
-
     @Override public int getBasePoints() { return basePoints; }
-
     @Override public boolean isCompleted() { return completed; }
 
     @Override
