@@ -1,7 +1,7 @@
 //Hannah Huang
 //QuestBoard for coordinating quest storage and assignment
 //using Eclipse IDE this time so hopefully there's no funky porting stuff that leads to AI flagging
-//I figured out how to commit via like copy/pasting the code into here, hopefully it doesn't mess anything up
+//I feel like some of the simple printing things for when something goes wrong should throw errors, but I'm not sure what errors
 
 package campusquest;
 
@@ -74,10 +74,10 @@ public class QuestBoard {
 		}
 		//if student or quest couldn't be found, say it
 		else if(studentFound == false) {
-			System.out.println("Could not find student.");
+			throw new IllegalArgumentException("Could not find student.");
 		}
 		else if(questToAssign == null) {
-			System.out.println("Could not find quest.");
+			throw new IllegalArgumentException ("Could not find quest.");
 		} //end assignment checks
 	} //end function
 	
@@ -136,12 +136,12 @@ public class QuestBoard {
 	//printAllQuests
 	public void printAllQuests() 
 	{
-		//hold variable for the name
+		//hold variable for the quest
 		String hold = "hold";
 		
-		//literally just a loop to get the names and print them
+		//literally just a loop to get the quests, convert them to strings, and print them
 		for(Integer key : questsById.keySet()) {
-			hold = questsById.get(key).getTitle(); //setting hold to be the title of the quest
+			hold = questsById.get(key).toString(); //setting hold to be the title of the quest
 			System.out.println(hold + "\n"); //printing, I think \n is the newline character? I had to google it
 		} //end printing loop
 	} //end function
@@ -165,11 +165,16 @@ public class QuestBoard {
 		
 		//if the student was found, print their quest list
 		if(studentFound == true) {
-			System.out.println(s.getName() + "\n"); //printing name and newline
+			//hold variable for quest printing
+			String printHold = "hold";
+			
+			System.out.println(s.getName() + ":\n"); //printing name and newline
+			
 			//quest printing loop
 			for(int i = 0; i < hold.size(); i++) {
-				System.out.println(hold.get(i).getTitle() + ", "); //should print a list of the quests
-			}
+				printHold = hold.get(i).toString(); //converting the quest to a string
+				System.out.println(printHold + "\n"); //should print a list of the quests through the loop
+			} //end printing loop
 		} 
 		//if student wasn't found, let the user know
 		else {
