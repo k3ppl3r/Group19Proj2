@@ -5,7 +5,7 @@ package campusquest;
 
 public class StreakQuest extends AbstractQuest 
 {
-	//variable for storing days
+	//various storage/utility variables
 	private int days;
 	
 	//for this I mainly based it off of the code for VolunteerQuest with alterations to fit StreakQuest
@@ -31,7 +31,7 @@ public class StreakQuest extends AbstractQuest
 	public int completeFor(Student s)
 	{
 		markCompleted(); //marking it complete
-		int pointsAwarded = getBasePoints() + (days * 2); //calculating points to award
+		int pointsAwarded = getBasePoints() + (getDays() * 2); //calculating points to award
 		s.addPoints(pointsAwarded); //adding points
 		return pointsAwarded; //returning the amount of points added
 	} // end function
@@ -40,7 +40,7 @@ public class StreakQuest extends AbstractQuest
 	@Override
 	public String toString()
 	{
-		return super.toString() + " Streak[" + days + "]"; //basically adding on class specific info to existing thing
+		return super.toString() + " Streak[" + getDays() + "]"; //basically adding on class specific info to existing thing
 	} //end function
 	
 }
