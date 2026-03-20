@@ -1,7 +1,6 @@
 //Hannah Huang
 //QuestBoard for coordinating quest storage and assignment
 //using Eclipse IDE this time so hopefully there's no funky porting stuff that leads to AI flagging
-//I feel like some of the simple printing things for when something goes wrong should throw errors, but I'm not sure what errors
 
 package campusquest;
 
@@ -11,8 +10,8 @@ import java.util.Map;
 import java.util.List;
 
 public class QuestBoard {
-	Map<Integer, Quest> questsById = new HashMap<>();
-	Map<Student, List<Quest>> assignments = new HashMap<>();
+	private Map<Integer, Quest> questsById = new HashMap<>();
+	private Map<Student, List<Quest>> assignments = new HashMap<>();
 	
 	//addQuest
 	public void addQuest(Quest q) 
@@ -55,29 +54,45 @@ public class QuestBoard {
 	//assignQuest function. currently don't know what to assume in terms of assigning the same quest multiple times to the same student
 	public void assignQuest(Student s, int questId) 
 	{
-		//note: I'm making this with the assumption that needed students will be on the list
+		//note: I'm making this with the assumption that all students used will exist and be on the HashSet, because as of writing I don't know hwo to search that here without making the HashSet public
 		//hold/utility variables
-		boolean studentFound = false; //for if student exists
+		boolean studentFound = false; //for if student is on the board
 		Quest questToAssign = findQuest(questId); //getting the quest to assign
 		
-		//searching for the student in the assignments map
+		//if the quest to assign doesn't exist, throw error
+		if(questToAssign == null) {
+			throw new IllegalArgumentException("Could not find quest.");
+		}
+		
+		//searching for the student on the assignment board via the created equals function
 		for(Student key : assignments.keySet()) {
-			//if the student is found, make sure it knows
 			if(key.equals(s)) {
 				studentFound = true;
 			}
 		} //end search loop
 		
-		//if the student has been found and the quest has been found, assign the quest to the student
-		if(studentFound == true || questToAssign != null) {
+		//if the student isn't on the assignments map, put them in
+		if(studentFound == false) {
+			assignments.put(s, null);
+			
+			//assigning quest if nothing went wrong
 			assignments.get(s).add(questToAssign);
+			System.out.println("Quest assigned!");
 		}
-		//if student or quest couldn't be found, say it
-		else if(studentFound == false) {
-			throw new IllegalArgumentException("Could not find student.");
-		}
-		else if(questToAssign == null) {
-			throw new IllegalArgumentException ("Could not find quest.");
+		//if the student is on the quest board, make sure they haven't already been assigned the quest
+		else if(studentFound == true && questToAssign != null) {
+			List<Quest> hold = assignments.get(s); //holding the student's assignments
+			
+			//search loop by ID
+			for(int i = 0; i < hold.size(); i++) {
+				//if the quest has already been assigned, throw error
+				if(hold.get(i).getId() == questToAssign.getId()) {
+					throw new IllegalArgumentException("Quest already assigned to this student");
+				}
+			} //end searching for loop
+			
+			//add quest if nothing went wrong
+			assignments.get(s).add(questToAssign);
 		} //end assignment checks
 	} //end function
 	
@@ -122,12 +137,12 @@ public class QuestBoard {
 			}
 			//else, let the user know that quest is not assigned to the student
 			else {
-				System.out.println("That quest isn't assigned to this student.");
+				throw new IllegalArgumentException("That quest isn't assigned to this student.");
 			} //end finding quest if/else
 		}
 		//if student isn't found, let the user know
 		else {
-			System.out.println("Could not find student.");
+			throw new IllegalArgumentException("Could not find student.");
 		} //end student found if/else
 		
 		return pointsAwarded; //return value
@@ -163,22 +178,15 @@ public class QuestBoard {
 			}
 		} //end search loop
 		
+		System.out.println(s.toString() + ":\n"); //printing student and newline
+		
 		//if the student was found, print their quest list
 		if(studentFound == true) {
-			//hold variable for quest printing
-			String printHold = "hold";
-			
-			System.out.println(s.getName() + ":\n"); //printing name and newline
-			
-			//quest printing loop
-			for(int i = 0; i < hold.size(); i++) {
-				printHold = hold.get(i).toString(); //converting the quest to a string
-				System.out.println(printHold + "\n"); //should print a list of the quests through the loop
-			} //end printing loop
+			RewardUtil.printAll(hold);
 		} 
 		//if student wasn't found, let the user know
 		else {
-			System.out.println("Could not find student");
+			System.out.println("No quests assigned.");
 		} //end student found check if/else
 		
 	} //end function
