@@ -1,5 +1,5 @@
 //Brady Keppler
-//Abstract base
+//Base class for all quests, handles the common stuff so subclasses dont have to repeat it
 
 package campusquest;
 
@@ -11,28 +11,28 @@ public abstract class AbstractQuest implements Quest {
     private boolean completed;
 
     public AbstractQuest(int id, String title, int basePoints) {
-        //no junk data
+        //id has to be a real positive number, 0 or negative doesnt make sense for a quest
         if (id <= 0)
             throw new IllegalArgumentException("Quest id must be positive, got: " + id);
         if (title == null || title.isBlank())
             throw new IllegalArgumentException("Quest title can't be blank");
+        // points have to actually mean something
         if (basePoints <= 0)
             throw new IllegalArgumentException("basePoints must be > 0");
 
         this.id = id;
         this.title = title;
         this.basePoints = basePoints;
-        this.completed = false;
+        this.completed = false;  // starts incomplete, obviously
     }
 
-    //call this once the quest is finished; can't go back
+    //once a quest is done its done, no redoing it
     protected void markCompleted() {
         if (completed)
-            throw new IllegalStateException("Quest " + id + " already completed");
+            throw new IllegalStateException("Quest " + id + " is already marked complete");
         completed = true;
     }
 
-    //getters
     @Override public int getId() { return id; }
     @Override public String getTitle() { return title; }
     @Override public int getBasePoints() { return basePoints; }

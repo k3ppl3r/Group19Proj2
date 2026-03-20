@@ -1,9 +1,9 @@
 //Brady Keppler
-//Interface
+//common interface for all quest types so we can store them together and call completeFor
+//without caring whether its a check-in, survey, or whatever else gets added later
 
 package campusquest;
 
-//every quest type has to implement these
 public interface Quest {
 
     int getId();
@@ -12,6 +12,6 @@ public interface Quest {
 
     boolean isCompleted();
 
-    //mark done, give the student their points, return how many they got
+    //does the quest for a given student, gives them their points, returns the amount
     int completeFor(Student s);
 }
