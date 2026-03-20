@@ -59,6 +59,7 @@ public class Main {
 		questBoard.completeQuest(Susie, 1);
 		questBoard.completeQuest(Adeline, 6);
 		questBoard.completeQuest(Susie, 3);
+		questBoard.completeQuest(John1, 4);
 		
 		//putting this in a list because that's how the reward util thing works
 		List<Student> studentList = new ArrayList<>();
