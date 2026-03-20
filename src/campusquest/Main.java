@@ -18,7 +18,7 @@ public class Main {
 		Student Adeline = new Student("Adeline");
 		Student Susie = new Student("Susie");
 		Student John1 = new Student("John");
-		Student John2 = new Student("John");
+		Student John2 = new Student("John2");
 		students.add(Adeline);
 		students.add(Susie);
 		students.add(John1);
