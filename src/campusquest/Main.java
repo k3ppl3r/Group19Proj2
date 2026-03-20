@@ -43,7 +43,11 @@ public class Main {
 		questBoard.addQuest(volunteer2);
 		questBoard.addQuest(event1);
 		questBoard.addQuest(event2);
-		questBoard.addQuest(streakDupe); //should throw exception
+		try {
+			questBoard.addQuest(streakDupe); //should throw exception
+		} catch (IllegalArgumentException e) {
+			System.out.println("Caught expected duplicate ID exception: " + e.getMessage());
+		}
 		
 		//assigning quests
 		questBoard.assignQuest(Susie, 1);
