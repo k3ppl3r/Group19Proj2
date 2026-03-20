@@ -5,6 +5,7 @@
 package campusquest;
 
 //various imports to make things work
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -73,7 +74,7 @@ public class QuestBoard {
 		
 		//if the student isn't on the assignments map, put them in
 		if(studentFound == false) {
-			assignments.put(s, null);
+			assignments.put(s, new ArrayList<>());
 			
 			//assigning quest if nothing went wrong
 			assignments.get(s).add(questToAssign);
